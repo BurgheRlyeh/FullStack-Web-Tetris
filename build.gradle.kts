@@ -1,0 +1,86 @@
+plugins {
+    kotlin("multiplatform") version "1.8.0"
+    application
+}
+
+group = "com.github.burgherlyeh"
+version = "1.0-SNAPSHOT"
+
+repositories {
+    jcenter()
+    mavenCentral()
+    maven("https://maven.pkg.jetbrains.space/public/p/kotlinx-html/maven")
+}
+
+kotlin {
+    jvm {
+        jvmToolchain(16)
+        withJava()
+        testRuns["test"].executionTask.configure {
+            useJUnitPlatform()
+        }
+    }
+    js(IR) {
+        binaries.executable()
+        browser {
+            commonWebpackConfig {
+                cssSupport {
+                    enabled.set(true)
+                }
+            }
+        }
+    }
+    sourceSets {
+        val commonMain by getting
+        val commonTest by getting {
+            dependencies {
+                implementation(kotlin("test"))
+            }
+        }
+        val jvmMain by getting {
+            dependencies {
+                implementation("io.ktor:ktor-server-netty:2.0.2")
+                implementation("io.ktor:ktor-server-html-builder-jvm:2.0.2")
+                implementation("org.jetbrains.kotlinx:kotlinx-html-jvm:0.7.2")
+                implementation("org.slf4j:slf4j-simple:2.0.6")
+            }
+        }
+        val jvmTest by getting
+        val jsMain by getting {
+            dependencies {
+//                implementation(kotlin("stdlib-js"))
+//                implementation("org.jetbrains.kotlinx:kotlinx-browser-dom:1.0.0")
+                implementation("org.jetbrains.kotlin-wrappers:kotlin-react:18.2.0-pre.506")
+                implementation("org.jetbrains.kotlin-wrappers:kotlin-react-dom:18.2.0-pre.506")
+                implementation("org.jetbrains.kotlin-wrappers:kotlin-emotion:11.10.6-pre.506")
+                implementation("org.jetbrains.kotlin-wrappers:kotlin-redux:4.1.2-pre.506")
+                implementation("org.jetbrains.kotlin-wrappers:kotlin-react-redux:7.2.6-pre.506")
+            }
+        }
+        val jsTest by getting
+    }
+}
+
+application {
+    mainClass.set("com.github.burgherlyeh.application.ServerKt")
+}
+
+tasks.named<Copy>("jvmProcessResources") {
+    val jsBrowserDistribution = tasks.named("jsBrowserDistribution")
+    from(jsBrowserDistribution)
+}
+
+tasks.named<JavaExec>("run") {
+    dependsOn(tasks.named<Jar>("jvmJar"))
+    classpath(tasks.named<Jar>("jvmJar"))
+}
+
+task("copyStylesheets", Copy::class) {
+    from(kotlin.sourceSets["jsMain"].resources) {
+        include("styles/**")
+    }
+    into("${rootProject.buildDir}/js/packages/${rootProject.name}-${project.name}")
+}
+tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinJsDce::class) {
+    dependsOn("copyStylesheets")
+}
