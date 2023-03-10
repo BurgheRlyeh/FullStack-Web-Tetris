@@ -3,7 +3,6 @@ package components
 import csstype.ClassName
 import react.FC
 import react.Props
-import react.dom.html.ReactHTML
 import react.dom.html.ReactHTML.div
 
 external interface GridSquareProps : Props {

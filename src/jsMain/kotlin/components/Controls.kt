@@ -1,9 +1,6 @@
 package components
 
-import actions.moveDown
-import actions.moveLeft
-import actions.moveRight
-import actions.rotate
+import actions.*
 import csstype.ClassName
 import dispatch
 import react.FC
@@ -14,58 +11,39 @@ import react.redux.useSelector
 import utils.GameState
 
 val Controls = FC<Props> {
-    var isRunning = useSelector { state: GameState -> state.isRunning }
-    var gameOver = useSelector { state: GameState -> state.gameOver }
+    val isRunning = useSelector { state: GameState -> state.isRunning }
+    val gameOver = useSelector { state: GameState -> state.gameOver }
+    val isDisabled = !isRunning || gameOver
 
     div {
         className = ClassName("controls")
 
-        /** Left **/
         ReactHTML.button {
             className = ClassName("control-button")
-            disabled = !isRunning || gameOver
+            disabled = isDisabled
             +"Left"
-            onClick = { e ->
-                if (isRunning && !gameOver) {
-                    dispatch(moveLeft())
-                }
-            }
+            onClick = { if (!isDisabled) dispatch(MoveLeft()) }
         }
 
-        /** Right **/
         ReactHTML.button {
             className = ClassName("control-button")
-            disabled = !isRunning || gameOver
+            disabled = isDisabled
             +"Right"
-            onClick = { e ->
-                if (isRunning && !gameOver) {
-                    dispatch(moveRight())
-                }
-            }
+            onClick = { if (!isDisabled) dispatch(MoveRight()) }
         }
 
-        /** Rotate **/
         ReactHTML.button {
             className = ClassName("control-button")
-            disabled = !isRunning || gameOver
+            disabled = isDisabled
             +"Rotate"
-            onClick = { e ->
-                if (isRunning && !gameOver) {
-                    dispatch(rotate())
-                }
-            }
+            onClick = { if (!isDisabled) dispatch(Rotate()) }
         }
 
-        /** Down **/
         ReactHTML.button {
             className = ClassName("control-button")
-            disabled = !isRunning || gameOver
+            disabled = isDisabled
             +"Down"
-            onClick = { e ->
-                if (isRunning && !gameOver) {
-                    dispatch(moveDown())
-                }
-            }
+            onClick = { if (!isDisabled) dispatch(MoveDown()) }
         }
     }
 }

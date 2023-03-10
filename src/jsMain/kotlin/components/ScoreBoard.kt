@@ -1,25 +1,18 @@
 package components
 
-import actions.pause
-import actions.restart
-import actions.resume
+import actions.*
 import csstype.ClassName
 import dispatch
 import react.FC
 import react.Props
 import react.dom.html.ReactHTML.button
 import react.dom.html.ReactHTML.div
-import react.redux.useDispatch
 import react.redux.useSelector
-import reducers.gameReducer
-import redux.combineReducers
 import utils.GameState
 
-val ScoreBoard = FC<Props> { props ->
-    val game = useSelector { state: GameState -> state }
-    var score = game.score
-    var isRunning = game.isRunning
-    var gameOver = game.gameOver
+val ScoreBoard = FC<Props> {
+    val state = useSelector { state: GameState -> state }
+    val (_, _, _, _, _, _, isRunning, score, _, gameOver) = state
 
     div {
         className = ClassName("score-board")
@@ -33,16 +26,16 @@ val ScoreBoard = FC<Props> { props ->
         button {
             className = ClassName("score-board-button")
             +if (isRunning) "Pause" else "Play"
-            onClick = { e ->
+            onClick = {
                 if (!gameOver) {
-                    dispatch(if (isRunning) pause() else resume())
+                    dispatch(if (isRunning) Pause() else Resume())
                 }
             }
         }
         button {
             className = ClassName("score-board-button")
             +"Restart"
-            onClick = { e -> dispatch(restart())}
+            onClick = { dispatch(Restart())}
         }
     }
 }

@@ -2,7 +2,6 @@ import components.*
 import csstype.ClassName
 import react.FC
 import react.Props
-import react.dom.html.ReactHTML
 import react.dom.html.ReactHTML.div
 import react.dom.html.ReactHTML.h1
 import react.dom.html.ReactHTML.header
@@ -15,11 +14,9 @@ import utils.defaultGameState
 
 var gameStore = createStore(::gameReducer, defaultGameState(), rEnhancer())
 
-fun dispatch(rAction: RAction) {
-    gameStore.dispatch(rAction)
-}
+fun dispatch(rAction: RAction) = gameStore.dispatch(rAction)
 
-val App = FC<Props> { props ->
+val App = FC<Props> {
     Provider {
         this.store = gameStore
 

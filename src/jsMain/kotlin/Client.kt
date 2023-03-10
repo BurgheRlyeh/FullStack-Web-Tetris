@@ -4,7 +4,7 @@ import react.create
 import react.dom.client.createRoot
 
 fun main() {
-    val styles = require("./styles/index.css")
+    require("./styles/index.css")
 
     val container = document.createElement("div")
     document.body.appendChild(container)

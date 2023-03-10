@@ -8,9 +8,9 @@ import react.dom.html.ReactHTML.h1
 import react.redux.useSelector
 import utils.GameState
 
-val MessagePopup = FC<Props> {props ->
-    var isRunning = useSelector { state: GameState -> state.isRunning }
-    var gameOver = useSelector { state: GameState -> state.gameOver }
+val MessagePopup = FC<Props> {
+    val isRunning = useSelector { state: GameState -> state.isRunning }
+    val gameOver = useSelector { state: GameState -> state.gameOver }
 
     var message = ""
     var isHidden = "hidden"

@@ -48,8 +48,6 @@ kotlin {
         val jvmTest by getting
         val jsMain by getting {
             dependencies {
-//                implementation(kotlin("stdlib-js"))
-//                implementation("org.jetbrains.kotlinx:kotlinx-browser-dom:1.0.0")
                 implementation("org.jetbrains.kotlin-wrappers:kotlin-react:18.2.0-pre.506")
                 implementation("org.jetbrains.kotlin-wrappers:kotlin-react-dom:18.2.0-pre.506")
                 implementation("org.jetbrains.kotlin-wrappers:kotlin-emotion:11.10.6-pre.506")
