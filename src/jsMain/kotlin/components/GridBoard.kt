@@ -41,7 +41,7 @@ val GridBoard = FC<Props> {
         if (isRunning) {
             requestRef.current = window.requestAnimationFrame { update(it) }.toDouble()
         } else {
-            window.cancelAnimationFrame(requestRef.current!!.toInt())
+            return@useEffect window.cancelAnimationFrame(requestRef.current!!.toInt())
         }
     }
 

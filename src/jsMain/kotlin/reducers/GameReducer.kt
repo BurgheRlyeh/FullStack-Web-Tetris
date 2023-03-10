@@ -50,7 +50,7 @@ fun gameReducer(state: GameState = defaultGameState(), action: RAction): GameSta
             var newSpeed = speed
             var newLevel = level
             if (2 * score >= level * speed) {
-                newSpeed += newSpeed / 10
+                newSpeed = newSpeed * 8 / 10
                 ++newLevel
             }
 

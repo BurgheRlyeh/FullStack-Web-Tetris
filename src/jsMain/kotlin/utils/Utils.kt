@@ -30,7 +30,7 @@ fun defaultGameState() = GameState(
     isRunning = true,
     score = 0,
     level = 1,
-    speed = 1000,
+    speed = 750,
     gameOver = false
 )
 
@@ -84,9 +84,12 @@ fun checkRows(grid: Grid): Int {
     for (row in grid.indices) {
         if (grid[row].indexOf(0) == -1) {
             ++completedRows
-            // Remove the row and add a new empty one at the top
-            js("grid.splice(row, 1)")
-            js("grid.unshift(Array(10).fill(0))")
+
+            for (i in grid.size - 1 downTo 1) {
+                for (j in grid[i].indices) {
+                    grid[i][j] = grid[i - 1][j]
+                }
+            }
         }
     }
 

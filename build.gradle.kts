@@ -60,7 +60,7 @@ kotlin {
 }
 
 application {
-    mainClass.set("com.github.burgherlyeh.application.ServerKt")
+    mainClass.set("com.github.burgherlyeh.ServerKt")
 }
 
 tasks.named<Copy>("jvmProcessResources") {
