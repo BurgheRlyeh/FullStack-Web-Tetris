@@ -12,7 +12,7 @@ import utils.GameState
 
 val ScoreBoard = FC<Props> {
     val state = useSelector { state: GameState -> state }
-    val (_, _, _, _, _, _, isRunning, score, _, gameOver) = state
+    val (_, _, _, _, _, _, isRunning, score, level, _, gameOver) = state
 
     div {
         className = ClassName("score-board")
@@ -21,7 +21,7 @@ val ScoreBoard = FC<Props> {
             +"Score: $score"
         }
         div {
-            +"Level: 1"
+            +"Level: $level"
         }
         button {
             className = ClassName("score-board-button")

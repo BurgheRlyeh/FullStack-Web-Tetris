@@ -15,6 +15,7 @@ data class GameState(
     val nextShape: Int,
     val isRunning: Boolean,
     val score: Int,
+    val level: Int,
     val speed: Int,
     val gameOver: Boolean
 ): State
@@ -28,6 +29,7 @@ fun defaultGameState() = GameState(
     nextShape = randomShape(),
     isRunning = true,
     score = 0,
+    level = 1,
     speed = 1000,
     gameOver = false
 )

@@ -5,7 +5,7 @@ import redux.RAction
 import utils.*
 
 fun gameReducer(state: GameState = defaultGameState(), action: RAction): GameState {
-    val (grid, shape, rotation, x, y, nextShape, isRunning, score, _, _) = state
+    val (grid, shape, rotation, x, y, nextShape, isRunning, score, level, speed, _) = state
 
     when (action) {
         is Rotate -> {
@@ -47,13 +47,19 @@ fun gameReducer(state: GameState = defaultGameState(), action: RAction): GameSta
                 return state.copy(shape = 0, grid = newGrid, gameOver = true)
             }
 
-            // TODO: Check and Set level
-
+            var newSpeed = speed
+            var newLevel = level
+            if (2 * score >= level * speed) {
+                newSpeed += newSpeed / 10
+                ++newLevel
+            }
 
             return defaultGameState().copy(
                 grid = newGrid,
                 shape = nextShape,
                 score = score + checkRows(newGrid),
+                speed = newSpeed,
+                level = newLevel,
                 isRunning = isRunning
             )
         }

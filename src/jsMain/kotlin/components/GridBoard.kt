@@ -17,7 +17,7 @@ val GridBoard = FC<Props> {
     val progressTimeRef = useRef(0.0)
 
     val state = useSelector { state: GameState -> state }
-    val (grid, shape, rotation, x, y, _, isRunning, _, speed, _) = state
+    val (grid, shape, rotation, x, y, _, isRunning, _, _, speed, _) = state
 
     val block = shapes[shape][rotation]
 
